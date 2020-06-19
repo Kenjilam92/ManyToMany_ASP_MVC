@@ -9,8 +9,8 @@ using products_categories.Models;
 namespace products_categories.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200619145822_basic_element")]
-    partial class basic_element
+    [Migration("20200619165130_validation2")]
+    partial class validation2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,9 @@ namespace products_categories.Migrations
 
                     b.Property<DateTime>("CreateAt");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(45);
 
                     b.Property<DateTime>("UpdateAt");
 
@@ -62,9 +64,12 @@ namespace products_categories.Migrations
 
                     b.Property<DateTime>("CreateAt");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(45);
 
                     b.Property<decimal>("Price");
 
@@ -85,7 +90,7 @@ namespace products_categories.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("products_categories.Models.Product", "ProductDetails")
-                        .WithMany()
+                        .WithMany("AllCategories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

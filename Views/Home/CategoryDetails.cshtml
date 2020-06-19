@@ -1,0 +1,38 @@
+@{
+    ViewData ["Title"] = ViewBag.ChoosenOne.Name;
+}
+@model Association
+<div class="col">
+    <div class="d-flex flex-column align-items-center mb-3 border-bottom border-dark">
+        <h1>@ViewBag.ChoosenOne.Name</h1>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Products:</h2>
+            @foreach (var p in ViewBag.ChoosenOne.AllProducts)
+            {
+                <p>@p.ProductDetails.Name</p>
+            }
+        </div>
+        <div class="col">
+            @{
+                List<Product> a = (List<Product>) ViewBag.Products;
+            }
+            @if (a.Count != 0)
+            {
+            <form action="/product/@ViewBag.ChoosenOne.CategoryId/add" method="post" class="form-group">
+                <label asp-for="ProductId">Other Products:</label>
+                
+                <select asp-for="ProductId">
+                    @foreach (var p in ViewBag.Products)
+                    {
+                        <option value="@p.ProductId">@p.Name</option>
+                    }
+                </select>
+                <input asp-for="CategoryId" value="@ViewBag.ChoosenOne.CategoryId" type="hidden">
+                <button class="btn btn-primary">Add</button>
+            </form>
+            }
+        </div>
+    </div>
+</div>

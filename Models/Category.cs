@@ -8,10 +8,12 @@ namespace products_categories.Models
     {
         [Key]
         public int CategoryId {get;set;}
+        [Required]
+        [MaxLength(45)]
         public string Name {get;set;}
         public DateTime CreateAt {get;set;} = DateTime.Now;
         public DateTime UpdateAt {get;set;} = DateTime.Now;
         ///
-        public List<Product> AllProducts {get;set;}
+        public List<Association> AllProducts {get;set;}
     }
 }
