@@ -9,21 +9,25 @@ using products_categories.Models;
 namespace products_categories.Controllers
 {
     public class HomeController : Controller
-    {
+    {   
+        private static Context databases {get;set;}
+        public HomeController(Context context)
+        {
+            databases = context;
+        }
+        [HttpGet]
+        [Route("")]
         public IActionResult Index()
         {
+            return Redirect("/products");
+        }
+        [Route("products")]
+        public IActionResult Product()
+        {   
+            ViewBag.Products = databases.Products.ToList();
             return View();
         }
+        // [HttpPost]
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
